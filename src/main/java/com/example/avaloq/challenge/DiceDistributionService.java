@@ -3,7 +3,6 @@ package com.example.avaloq.challenge;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -12,23 +11,26 @@ public class DiceDistributionService {
 
     Random random = new Random();
 
-    public Map<Integer,Integer> getDiceDistribution() {
-        int total;
-        int min = 1;
-        int max = 6;
+    public Map<Integer,Integer> getDiceDistribution(int numberOfDice, int numberOfDiceSides, int numberOfRoles) {
+        int totalSumOfRoll;
         Map<Integer,Integer> diceDistribution = new HashMap<>();
-        for(int i = 0; i < 100; i++) {
-            total = 0;
-            for(int j=0; j<3; j++){
-                total += random.ints(1, 7).findFirst().getAsInt();
-            }
-            if(diceDistribution.containsKey(total)) {
-                diceDistribution.replace(total, diceDistribution.get(total) + 1);
+        for(int i = 0; i < numberOfRoles; i++) {
+           totalSumOfRoll = getRollSum(numberOfDice, numberOfDiceSides);
+            if(diceDistribution.containsKey(totalSumOfRoll)) {
+                diceDistribution.replace(totalSumOfRoll, diceDistribution.get(totalSumOfRoll) + 1);
             } else {
-                diceDistribution.put(total, 1);
+                diceDistribution.put(totalSumOfRoll, 1);
             }
         }
         return diceDistribution;
+    }
+
+    private int getRollSum(int numberOfDice, int numberOfDiceSides) {
+        int totalSumOfRoll = 0;
+        for(int i = 0; i < numberOfDice; i++){
+            totalSumOfRoll += random.ints(1, numberOfDiceSides + 1).findFirst().getAsInt();
+        }
+        return totalSumOfRoll;
     }
 
 }
