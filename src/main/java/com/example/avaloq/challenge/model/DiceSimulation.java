@@ -9,13 +9,15 @@ import java.util.Map;
 @Data
 @Entity
 public class DiceSimulation {
-    @EmbeddedId
-    private DiceSimulationPrimaryKey diceSimulationPrimaryKey;
+    @Id
+    @GeneratedValue
+    private long id;
+    private int numberOfDice;
+    private int numberOfDiceSides;
     private int totalRollsMade;
-    private int numberOfSimulations;
     @ElementCollection
     @CollectionTable(name = "total_sum_count")
     @MapKeyColumn(name = "total_sum")
     @Column(name = "count")
-    private Map<Integer,Integer> diceTotalSumCount = new HashMap<>(); ;
+    private Map<Integer,Integer> diceDistribution = new HashMap<>(); ;
 }

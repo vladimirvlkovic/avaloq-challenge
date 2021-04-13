@@ -27,8 +27,7 @@ public class DiceDistributionService {
                 diceDistribution.put(totalSumOfRoll, 1);
             }
         }
-        DiceSimulationPrimaryKey diceSimulationPrimaryKey = getDiceSimulationPrimaryKey(numberOfDice, numberOfDiceSides);
-        saveDiceDistribution(diceSimulationPrimaryKey,numberOfRolls,diceDistribution);
+        saveDiceDistribution(numberOfDice, numberOfDiceSides,numberOfRolls,diceDistribution);
         return diceDistribution;
     }
 
@@ -40,39 +39,13 @@ public class DiceDistributionService {
         return totalSumOfRoll;
     }
 
-    private DiceSimulationPrimaryKey getDiceSimulationPrimaryKey(int numberOfDice, int numberOfDiceSides) {
-        return new DiceSimulationPrimaryKey(numberOfDice, numberOfDiceSides);
-    }
-
-    private void saveDiceDistribution(DiceSimulationPrimaryKey diceSimulationPrimaryKey, int numberOfRolls, Map<Integer, Integer> diceDistribution) {
-        DiceSimulation diceSimulation;
-
-        if (diceSimulationRepository.findById(diceSimulationPrimaryKey).isPresent()) {
-            diceSimulation = diceSimulationRepository.findById(diceSimulationPrimaryKey).get();
-            diceSimulation = updateDiceSimulation(diceSimulation, numberOfRolls, diceDistribution);
-        } else {
-            diceSimulation = initDiceSimulation(diceSimulationPrimaryKey, numberOfRolls, diceDistribution);
-        }
-        diceSimulationRepository.save(diceSimulation);
-        System.out.println(diceSimulationRepository.findById(diceSimulationPrimaryKey));
-    }
-
-    private DiceSimulation updateDiceSimulation(DiceSimulation diceSimulation, int numberOfRolls, Map<Integer, Integer> diceDistribution) {
-        DiceSimulation updatedDiceSimulation = diceSimulation;
-        updatedDiceSimulation.setNumberOfSimulations(diceSimulation.getNumberOfSimulations() + 1);
-        updatedDiceSimulation.setTotalRollsMade(diceSimulation.getTotalRollsMade() + numberOfRolls);
-        Map<Integer,Integer> databaseDiceDistribution = diceSimulation.getDiceTotalSumCount();
-        diceDistribution.forEach((key, value) -> databaseDiceDistribution.merge(key, value, Integer::sum));
-        return updatedDiceSimulation;
-    }
-
-    private DiceSimulation initDiceSimulation(DiceSimulationPrimaryKey diceSimulationPrimaryKey, int numberOfRolls, Map<Integer, Integer> diceDistribution) {
+    private void saveDiceDistribution(int numberOfDice, int numberOfDiceSides, int numberOfRolls, Map<Integer, Integer> diceDistribution) {
         DiceSimulation diceSimulation = new DiceSimulation();
-        diceSimulation.setDiceSimulationPrimaryKey(diceSimulationPrimaryKey);
-        diceSimulation.setNumberOfSimulations(1);
+        diceSimulation.setNumberOfDice(numberOfDice);
+        diceSimulation.setNumberOfDiceSides(numberOfDiceSides);
         diceSimulation.setTotalRollsMade(numberOfRolls);
-        diceSimulation.setDiceTotalSumCount(diceDistribution);
-        return  diceSimulation;
+        diceSimulation.setDiceDistribution(diceDistribution);
+        diceSimulationRepository.save(diceSimulation);
     }
 
 }
