@@ -1,7 +1,6 @@
 package com.example.avaloq.challenge;
 
-import com.example.avaloq.challenge.model.DiceSimulation;
-import com.example.avaloq.challenge.model.DiceSimulationPrimaryKey;
+import com.example.avaloq.challenge.model.DiceDistribution;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,7 @@ import java.util.Random;
 public class DiceDistributionService {
 
     Random random = new Random();
-    final DiceSimulationRepository diceSimulationRepository;
+    final DiceDistributionRepository diceDistributionRepository;
 
     public Map<Integer,Integer> getDiceDistribution(int numberOfDice, int numberOfDiceSides, int numberOfRolls) {
         int totalSumOfRoll;
@@ -31,6 +30,7 @@ public class DiceDistributionService {
         return diceDistribution;
     }
 
+
     private int getRollSum(int numberOfDice, int numberOfDiceSides) {
         int totalSumOfRoll = 0;
         for(int i = 0; i < numberOfDice; i++){
@@ -40,12 +40,12 @@ public class DiceDistributionService {
     }
 
     private void saveDiceDistribution(int numberOfDice, int numberOfDiceSides, int numberOfRolls, Map<Integer, Integer> diceDistribution) {
-        DiceSimulation diceSimulation = new DiceSimulation();
-        diceSimulation.setNumberOfDice(numberOfDice);
-        diceSimulation.setNumberOfDiceSides(numberOfDiceSides);
-        diceSimulation.setTotalRollsMade(numberOfRolls);
-        diceSimulation.setDiceDistribution(diceDistribution);
-        diceSimulationRepository.save(diceSimulation);
+        DiceDistribution diceDistributionDbObject = new DiceDistribution();
+        diceDistributionDbObject.setNumberOfDice(numberOfDice);
+        diceDistributionDbObject.setNumberOfDiceSides(numberOfDiceSides);
+        diceDistributionDbObject.setNumberOfRolls(numberOfRolls);
+        diceDistributionDbObject.setDiceDistribution(diceDistribution);
+        diceDistributionRepository.save(diceDistributionDbObject);
     }
 
 }
