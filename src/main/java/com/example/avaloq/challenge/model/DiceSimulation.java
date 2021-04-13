@@ -2,9 +2,9 @@ package com.example.avaloq.challenge.model;
 
 import lombok.Data;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import java.util.ArrayList;
+import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @Entity
@@ -13,5 +13,9 @@ public class DiceSimulation {
     private DiceSimulationPrimaryKey diceSimulationPrimaryKey;
     private int totalRollsMade;
     private int numberOfSimulations;
-    private ArrayList<DiceTotalSumCount> diceTotalSumCount;
+    @ElementCollection
+    @CollectionTable(name = "total_sum_count")
+    @MapKeyColumn(name = "total_sum")
+    @Column(name = "count")
+    private Map<Integer,Integer> diceTotalSumCount = new HashMap<>(); ;
 }
