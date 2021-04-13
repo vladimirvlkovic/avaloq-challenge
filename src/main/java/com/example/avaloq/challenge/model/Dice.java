@@ -7,11 +7,11 @@ import javax.persistence.MappedSuperclass;
 @Data
 @MappedSuperclass
 public class Dice {
-     int numberOfDice;
-     int numberOfDiceSides;
+     int diceNumber;
+     int sideNumber;
 
-     public interface NumberOfDiceAndSides {
-         int getNumberOfDice();
-         int getNumberOfDiceSides();
+     public interface DiceAndSidesNumber {
+         int getDiceNumber();
+         int getSideNumber();
      }
 }

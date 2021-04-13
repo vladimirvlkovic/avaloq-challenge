@@ -12,7 +12,7 @@ public class DiceDistribution extends Dice{
     @Id
     @GeneratedValue
     private long id;
-    private int numberOfRolls;
+    private int rollNumber;
     @ElementCollection
     @CollectionTable(name = "total_sum_count")
     @MapKeyColumn(name = "total_sum")
