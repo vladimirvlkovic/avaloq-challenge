@@ -71,4 +71,16 @@ public class DiceDistributionService {
         return diceSimulation;
     }
 
+    public Map<Integer, Double> getRelativeDistribution(int numberOfDice, int numberOfDiceSides) {
+        List<DiceDistribution> diceDistributionList = diceDistributionRepository.findByNumberOfDiceAndNumberOfDiceSides(numberOfDice, numberOfDiceSides);
+        long totalNumberOfRolls = diceDistributionRepository.sumTotalRollsByNumberOfDiceAndNumberOfDiceSides(numberOfDice, numberOfDiceSides);
+        Map<Integer,Integer> sumOfDiceDistributions = new HashMap<>();
+        Map<Integer,Double> relativeDistributions = new HashMap<>();
+        for(DiceDistribution diceDistribution : diceDistributionList){
+            diceDistribution.getDiceDistribution().forEach((key, value) -> sumOfDiceDistributions.merge(key,value, Integer::sum));
+        }
+        sumOfDiceDistributions.forEach((key, value) -> relativeDistributions.put(key, value / totalNumberOfRolls / 100.0));
+        return relativeDistributions;
+    }
+
 }

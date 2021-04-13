@@ -27,4 +27,10 @@ public class DiceDistributionController {
     public List<DiceSimulation> getDiceSimulationList() {
         return diceDistributionService.getDiceSimulations();
     }
+
+    @GetMapping("api/relative-dice-distribution")
+    public Map<Integer, Double> getRelativeDiceDistribution(@RequestParam(required = false, defaultValue = "3") @Min(1) Integer numberOfDice,
+                                                            @RequestParam(required = false, defaultValue = "6") @Min(4) Integer numberOfDiceSides) {
+        return diceDistributionService.getRelativeDistribution(numberOfDice, numberOfDiceSides);
+    }
 }
