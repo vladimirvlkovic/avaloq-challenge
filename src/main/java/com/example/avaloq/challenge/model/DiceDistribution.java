@@ -8,12 +8,10 @@ import java.util.Map;
 
 @Data
 @Entity
-public class DiceDistribution {
+public class DiceDistribution extends Dice{
     @Id
     @GeneratedValue
     private long id;
-    private int numberOfDice;
-    private int numberOfDiceSides;
     private int numberOfRolls;
     @ElementCollection
     @CollectionTable(name = "total_sum_count")
