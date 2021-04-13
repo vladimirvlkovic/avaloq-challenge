@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class DiceSimulation extends Dice{
 
-    private int totalNumberOfRolls;
-    private int simulationNumber;
+    private long totalNumberOfRolls;
+    private long simulationNumber;
 }

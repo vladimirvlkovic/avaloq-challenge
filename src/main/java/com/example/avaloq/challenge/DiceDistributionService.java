@@ -1,12 +1,12 @@
 package com.example.avaloq.challenge;
 
+import com.example.avaloq.challenge.model.Dice;
 import com.example.avaloq.challenge.model.DiceDistribution;
+import com.example.avaloq.challenge.model.DiceSimulation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +46,29 @@ public class DiceDistributionService {
         diceDistributionDbObject.setNumberOfRolls(numberOfRolls);
         diceDistributionDbObject.setDiceDistribution(diceDistribution);
         diceDistributionRepository.save(diceDistributionDbObject);
+    }
+
+    public List<DiceSimulation> getDiceSimulations() {
+        List<Dice.NumberOfDiceAndSides> distinctNumberOfDiceAndSidesList;
+        distinctNumberOfDiceAndSidesList = diceDistributionRepository.findDistinctBy();
+        List<DiceSimulation> diceSimulationList = new ArrayList<>();
+        for(int i = 0; i < distinctNumberOfDiceAndSidesList.size(); i++) {
+            Dice.NumberOfDiceAndSides tmp = distinctNumberOfDiceAndSidesList.get(i);
+            DiceSimulation diceSimulation = getDiceSimulation(tmp);
+            diceSimulationList.add(diceSimulation);
+        }
+        return diceSimulationList;
+    }
+
+    private DiceSimulation getDiceSimulation(Dice.NumberOfDiceAndSides numberOfDiceAndSides) {
+        int numberOfDice = numberOfDiceAndSides.getNumberOfDice();
+        int numberOfDiceSides = numberOfDiceAndSides.getNumberOfDiceSides();
+        DiceSimulation diceSimulation = new DiceSimulation();
+        diceSimulation.setNumberOfDiceSides(numberOfDiceSides);
+        diceSimulation.setSimulationNumber(diceDistributionRepository.countByNumberOfDiceAndNumberOfDiceSides(numberOfDice, numberOfDiceSides));
+        diceSimulation.setNumberOfDice(numberOfDice);
+        diceSimulation.setTotalNumberOfRolls(diceDistributionRepository.sumTotalRollsByNumberOfDiceAndNumberOfDiceSides(numberOfDice, numberOfDiceSides));
+        return diceSimulation;
     }
 
 }
