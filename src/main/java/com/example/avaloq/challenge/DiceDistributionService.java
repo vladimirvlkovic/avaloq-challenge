@@ -75,7 +75,7 @@ public class DiceDistributionService {
 
     public Map<Integer, BigDecimal> getRelativeDistribution(int diceNumber, int sideNumber) {
         List<DiceDistribution> diceDistributionList = repository.findByDiceNumberAndSideNumber(diceNumber, sideNumber);
-        long totalNumberOfRolls = repository.sumTotalRollsByDiceNumberAndSideNumber(diceNumber, sideNumber);
+        Long totalNumberOfRolls = repository.sumTotalRollsByDiceNumberAndSideNumber(diceNumber, sideNumber);
         Map<Integer,Integer> sumOfDiceDistributions = new HashMap<>();
         Map<Integer, BigDecimal> relativeDistributions = new HashMap<>();
         for(DiceDistribution diceDistribution : diceDistributionList){
@@ -85,7 +85,6 @@ public class DiceDistributionService {
             BigDecimal percentage = new BigDecimal(value / (totalNumberOfRolls / 100.0));
             relativeDistributions.put(key, percentage.setScale(2, RoundingMode.HALF_EVEN));
         });
-
         return relativeDistributions;
     }
 

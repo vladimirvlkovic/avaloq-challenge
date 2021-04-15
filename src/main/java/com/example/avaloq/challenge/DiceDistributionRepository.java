@@ -13,7 +13,7 @@ public interface DiceDistributionRepository extends CrudRepository<DiceDistribut
 
     List<DiceDistribution> findByDiceNumberAndSideNumber(int diceNumber, int sideNumber);
     List<Dice.DiceAndSidesNumber> findDistinctBy();
-    long countByDiceNumberAndSideNumber(int diceNumber, int sideNumber);
+    Long countByDiceNumberAndSideNumber(int diceNumber, int sideNumber);
     @Query("select sum(d.rollNumber) from DiceDistribution d where d.diceNumber=?1 and d.sideNumber=?2")
-    long sumTotalRollsByDiceNumberAndSideNumber(int diceNumber, int sideNumber);
+    Long sumTotalRollsByDiceNumberAndSideNumber(int diceNumber, int sideNumber);
 }
