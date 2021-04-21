@@ -3,7 +3,7 @@ pipeline {
     agent any
     tools{
         maven 'Maven 3.3.9'
-        jdk 'jdk8'
+        jdk 'openjdk-11'
     }
     environment {
         PATH="/var/jenkins_home/miniconda3/bin:$PATH"
