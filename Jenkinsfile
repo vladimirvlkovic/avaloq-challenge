@@ -12,7 +12,7 @@ pipeline {
         stage ('Unit Testing') {
             steps {
                 githubNotify description: 'In Progress',  status: 'PENDING', context: 'Unit Testing'
-                sh 'mvn -Dtest="**.unit" test'
+                sh 'mvn -Dtest="**.unit.**" test'
             }
             post {
 		always {
