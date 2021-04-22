@@ -97,7 +97,7 @@ pipeline {
 	    }
     	stage ('Deploy to Production Environment') {
             when {
-                branch 'master'; branch 'main'
+		    anyOf{ branch 'master'; branch 'main'}
             }
             steps {
                 echo 'run only when branch master'
