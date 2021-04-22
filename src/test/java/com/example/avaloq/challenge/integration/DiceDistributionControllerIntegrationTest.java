@@ -1,13 +1,13 @@
-package com.example.avaloq.challenge;
+package com.example.avaloq.challenge.integration;
 
+import com.example.avaloq.challenge.DiceDistributionController;
+import com.example.avaloq.challenge.DiceDistributionService;
 import com.example.avaloq.challenge.model.DiceSimulation;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+
 @WebMvcTest(DiceDistributionController.class)
 public class DiceDistributionControllerIntegrationTest {
     @Autowired

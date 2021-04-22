@@ -1,16 +1,18 @@
-package com.example.avaloq.challenge;
+package com.example.avaloq.challenge.unit;
 
+import com.example.avaloq.challenge.DiceDistributionRepository;
+import com.example.avaloq.challenge.DiceDistributionService;
 import com.example.avaloq.challenge.model.Dice;
 import com.example.avaloq.challenge.model.DiceDistribution;
 import com.example.avaloq.challenge.model.DiceSimulation;
 
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ChallengeApplicationTest {
 
 	@Mock
@@ -39,7 +41,7 @@ public class ChallengeApplicationTest {
 	int sideNumber = 6;
 	int rollNumber = 10000;
 
-	@Before
+	@BeforeEach
 	public void init() {
 		result = service.getDiceDistribution(diceNumber, sideNumber, rollNumber);
 	}

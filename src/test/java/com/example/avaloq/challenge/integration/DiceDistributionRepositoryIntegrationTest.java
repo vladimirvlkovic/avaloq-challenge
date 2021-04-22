@@ -1,14 +1,13 @@
-package com.example.avaloq.challenge;
+package com.example.avaloq.challenge.integration;
 
+import com.example.avaloq.challenge.DiceDistributionRepository;
 import com.example.avaloq.challenge.model.Dice;
 import com.example.avaloq.challenge.model.DiceDistribution;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +16,6 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class DiceDistributionRepositoryIntegrationTest {
 
@@ -31,7 +29,7 @@ public class DiceDistributionRepositoryIntegrationTest {
     DiceDistribution diceDistribution;
     DiceDistribution diceDistribution1;
 
-    @Before
+    @BeforeEach
     public void init() {
         diceDistribution = new DiceDistribution();
         Map<Integer, Integer> dist = new HashMap<>();
