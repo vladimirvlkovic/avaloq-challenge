@@ -12,11 +12,11 @@ pipeline {
         stage ('Unit Testing') {
             steps {
                 githubNotify description: 'In Progress',  status: 'PENDING', context: 'Unit Testing'
-                sh 'mvn -Dmaven.test.failure.ignore=true test '
+                sh 'mvn test'
             }
             post {
 		always {
-			junit 'build/reports/**/*.xml'
+			junit 'target/surefire-reports/**/*.xml'
 		}
 		failure {
                     githubNotify description: 'FAILED, check jenkins console for details',  status: 'FAILURE', context: 'Unit Testing'
