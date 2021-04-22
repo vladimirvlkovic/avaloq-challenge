@@ -32,7 +32,19 @@ pipeline {
             anyOf { branch 'develop'; branch 'master'; branch 'main'; branch 'staging' }
             }
             steps {
-                echo 'run only when branch is develop/master/staging'
+	    	githubNotify description: 'In Progress',  status: 'PENDING', context: 'Integration Testing'
+		sh 'mvn -Dtest="**.integration.**" test'
+            }
+	    post {
+		always {
+			junit 'target/surefire-reports/**/*.xml'
+		}
+		failure {
+                    githubNotify description: 'FAILED, check jenkins console for details',  status: 'FAILURE', context: 'Integration Testing'
+                }
+                success {
+                    githubNotify description: 'OK',  status: 'SUCCESS', context: 'Integration Testing'
+                }
             }
         }
         stage('SonarQube analysis') {
