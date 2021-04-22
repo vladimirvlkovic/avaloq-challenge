@@ -3,6 +3,8 @@ package com.example.avaloq.challenge;
 import com.example.avaloq.challenge.model.Dice;
 import com.example.avaloq.challenge.model.DiceDistribution;
 import com.example.avaloq.challenge.model.DiceSimulation;
+
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ChallengeApplicationTests {
+public class ChallengeApplicationTest {
 
 	@Mock
 	DiceDistributionRepository repository;
