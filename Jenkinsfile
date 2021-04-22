@@ -6,13 +6,12 @@ pipeline {
         jdk 'openjdk-11'
     }
     environment {
-        PATH="/var/jenkins_home/miniconda3/bin:$PATH"
+        PROJECT_NAME="avaloq-challenge"
     }
     stages {
         stage ('Unit Testing') {
             steps {
                 githubNotify description: 'In Progress',  status: 'PENDING', context: 'Unit Testing'
-                sh 'mvn clean'
                 sh 'mvn -Dmaven.test.failure.ignore=true test '
             }
             post {
@@ -47,17 +46,16 @@ pipeline {
                 }
                 withSonarQubeEnv('sonar') {
                   sh "${scannerHome}/bin/sonar-scanner " +
-                      "-Dsonar.projectKey=testPython-${GIT_BRANCH} " +
-					  "-Dsonar.projectName=testPython-${GIT_BRANCH} " +
-					  "-Dsonar.projectVersion=1.0 " +
-					  "-Dsonar.sources=add.py " +
-					  "-Dsonar.language=py " +
-					  "-Dsonar.sourceEncoding=UTF-8 " +
-					  "-Dsonar.python.xunit.reportPath=nosetests.xml " +
-					  "-Dsonar.python.coverage.reportPaths=coverage.xml " +
-					  "-Dsonar.python.pylint=/var/jenkins_home/miniconda3/envs/*/bin/pylint " +
-					  "-Dsonar.python.pylint_config=.pylintrc " +
-					  "-Dsonar.python.pylint.reportPath=/var/jenkins_home/workspace/python-test-pipe/pylint-report.txt"
+                      "-Dsonar.projectKey=${PROJECT_NAME}-${GIT_BRANCH} "+
+                      "-Dsonar.projectName=${PROJECT_NAME}-${GIT_BRANCH} "+
+                      "-Dsonar.sourceEncoding=UTF-8 "+
+                      "-Dsonar.sources=src/main "+
+                      "-Dsonar.java.binaries=target/classes,target/test-classes "+
+                      "-Dsonar.tests=src/test "+
+                      "-Dsonar.dynamicAnalysis=reuseReports "+
+                      "-Dsonar.junit.reportsPath=target/sunfire-reports "+
+                      "-Dsonar.java.coveragePlugin=jacoco "+
+                      "-Dsonar.jacoco.reportPath=target "
                 }
                 timeout(time: 2, unit: 'MINUTES') {
           			script {
