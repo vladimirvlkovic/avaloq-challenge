@@ -35,7 +35,6 @@ pipeline {
                 echo 'run only when branch is develop/master/staging'
             }
         }
-
         stage('SonarQube analysis') {
             steps {
                 githubNotify description: 'Performing Analysis',  status: 'PENDING', context: 'SonarQube Analysis'
