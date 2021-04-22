@@ -12,6 +12,7 @@ pipeline {
         stage ('Unit Testing') {
             steps {
                 githubNotify description: 'In Progress',  status: 'PENDING', context: 'Unit Testing'
+                sh 'mvn clean'
                 sh 'mvn -Dmaven.test.failure.ignore=true test '
             }
             post {
