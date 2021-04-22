@@ -16,7 +16,7 @@ pipeline {
             }
             post {
 		always {
-			junit 'target/surefire-reports/**/*.xml'
+			junit 'build/reports/**/*.xml'
 		}
 		failure {
                     githubNotify description: 'FAILED, check jenkins console for details',  status: 'FAILURE', context: 'Unit Testing'
