@@ -12,7 +12,7 @@ pipeline {
         stage ('Unit Testing') {
             steps {
                 githubNotify description: 'In Progress',  status: 'PENDING', context: 'Unit Testing'
-                sh 'mvn -Dmaven.test.failure.ignore=true test '
+                sh 'mvn test'
             }
             post {
 		always {
@@ -35,7 +35,6 @@ pipeline {
                 echo 'run only when branch is develop/master/staging'
             }
         }
-
         stage('SonarQube analysis') {
             steps {
                 githubNotify description: 'Performing Analysis',  status: 'PENDING', context: 'SonarQube Analysis'
