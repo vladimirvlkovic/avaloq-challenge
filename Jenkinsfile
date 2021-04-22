@@ -12,7 +12,7 @@ pipeline {
         stage ('Unit Testing') {
             steps {
                 githubNotify description: 'In Progress',  status: 'PENDING', context: 'Unit Testing'
-                sh 'mvn test'
+                sh 'mvn -Dtest="**.unit.**" test'
             }
             post {
 		always {
@@ -29,7 +29,7 @@ pipeline {
         }
         stage ('Integration Tests') {
             when {
-            anyOf { branch 'develop'; branch 'master'; branch 'staging' }
+            anyOf { branch 'develop'; branch 'master'; branch 'main'; branch 'staging' }
             }
             steps {
                 echo 'run only when branch is develop/master/staging'
@@ -85,7 +85,7 @@ pipeline {
 	    }
     	stage ('Deploy to Production Environment') {
             when {
-                branch 'master'
+                branch 'master'; branch 'main'
             }
             steps {
                 echo 'run only when branch master'
