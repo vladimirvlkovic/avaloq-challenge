@@ -9,6 +9,21 @@ pipeline {
         PROJECT_NAME="avaloq-challenge"
     }
     stages {
+	stage ('Build'){
+	    steps {
+		 githubNotify description: 'In Progress',  status: 'PENDING', context: 'Build'
+	    	 sh 'mvn clean'
+		 sh 'mvn compile'
+	    }
+	     post {
+		failure {
+                    githubNotify description: 'FAILED, check jenkins console for details',  status: 'FAILURE', context: 'Build'
+                }
+                success {
+                    githubNotify description: 'OK',  status: 'SUCCESS', context: 'Build'
+                }
+            }
+	}
         stage ('Unit Testing') {
             steps {
                 githubNotify description: 'In Progress',  status: 'PENDING', context: 'Unit Testing'
