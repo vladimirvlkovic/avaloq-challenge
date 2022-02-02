@@ -2,7 +2,7 @@
 The `model` package contains the `Dice` class which is then extended by the `DiceDistribution`
 and `DiceSimulation` classes. `DiceDistribution` is being stored in the database. 
 The distribution of the roll sums and roll sum counts is being stored as a Collection Table.
-The `DiceSimulation` is being used as the response of the `/dice-simulation-list` endpoint.  
+The `DiceSimulation` is being used as the response of the `/dice-simulation-list` endpoint.   
   
 H2 in memory db is being used. 
   
